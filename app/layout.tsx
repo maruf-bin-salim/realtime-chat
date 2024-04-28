@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import Header from "@/components/Header";
+import { ThemeProvider } from "@/components/ThemeProvider";
+// import FirebaseAuthProvider from "@/components/FirebaseAuthProvider";
+// import SubscriptionProvider from "@/components/SubscriptionProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,12 +13,28 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+      <html lang="en">
+        <body className="flex flex-col min-h-screen bg-white dark:bg-black">
+          {/* <FirebaseAuthProvider> */}
+            {/* <SubscriptionProvider> */}
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <Header />
+                {children}
+
+                <Toaster />
+              </ThemeProvider>
+            {/* </SubscriptionProvider> */}
+          {/* </FirebaseAuthProvider> */}
+        </body>
+      </html>
   );
 }
