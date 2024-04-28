@@ -1,18 +1,24 @@
 "use client";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+// import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Skeleton } from "./ui/skeleton";
 import { Message, limitedSortedMessagesRef } from "@/lib/converters/Message";
 import UserAvatar from "./UserAvatar";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/store/store";
 
 function ChatListRow({ chatId }: { chatId: string }) {
-  const [messages, loading, error] = useCollectionData<Message>(
-    limitedSortedMessagesRef(chatId)
-  );
+  // const [messages, loading, error] = useCollectionData<Message>(
+  //   limitedSortedMessagesRef(chatId)
+  // );
+
+  const messages: any = [];
+  const loading: any = false;
+  const error: any = false;
+
   const language = useLanguageStore((state) => state.language);
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  let session: any = null;
   const router = useRouter();
 
   function prettyUUID(n = 4) {

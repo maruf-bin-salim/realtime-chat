@@ -3,9 +3,9 @@
 import { Message, sortedMessagesRef } from "@/lib/converters/Message";
 import { useLanguageStore } from "@/store/store";
 import { MessageCircleIcon } from "lucide-react";
-import { Session } from "next-auth";
+// import { Session } from "next-auth";
 import { createRef, use, useEffect } from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+// import { useCollectionData } from "react-firebase-hooks/firestore";
 import LoadingSpinner from "./LoadingSpinner";
 import UserAvatar from "./UserAvatar";
 
@@ -16,17 +16,21 @@ function ChatMessages({
 }: {
   chatId: string;
   initialMessages: Message[];
-  session: Session | null;
+  session: any | null;
 }) {
   const language = useLanguageStore((state) => state.language);
   const messagesEndRef = createRef<HTMLDivElement>();
 
-  const [messages, loading, error] = useCollectionData<Message>(
-    sortedMessagesRef(chatId),
-    {
-      initialValue: initialMessages,
-    }
-  );
+  // const [messages, loading, error] = useCollectionData<Message>(
+  //   sortedMessagesRef(chatId),
+  //   {
+  //     initialValue: initialMessages,
+  //   }
+  // );
+
+  const messages: any = [];
+  const loading: any = false;
+  const error: any = false;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

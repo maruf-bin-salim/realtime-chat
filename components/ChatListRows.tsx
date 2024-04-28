@@ -4,21 +4,26 @@ import {
   ChatMembers,
   chatMembersCollectionGroupRef,
 } from "@/lib/converters/ChatMembers";
-import { useSession } from "next-auth/react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+// import { useSession } from "next-auth/react";
+// import { useCollectionData } from "react-firebase-hooks/firestore";
 import { MessageSquare } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
 import ChatListRow from "./ChatListRow";
 
 function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  let session: any = null;
 
-  const [members, loading, error] = useCollectionData<ChatMembers>(
-    session && chatMembersCollectionGroupRef(session?.user.id!),
-    {
-      initialValue: initialChats,
-    }
-  );
+  // const [members, loading, error] = useCollectionData<ChatMembers>(
+  //   session && chatMembersCollectionGroupRef(session?.user.id!),
+  //   {
+  //     initialValue: initialChats,
+  //   }
+  // );
+  
+  const members: any = [];
+  const loading: any = false;
+  const error: any = false;
 
   if (members?.length === 0)
     return (
