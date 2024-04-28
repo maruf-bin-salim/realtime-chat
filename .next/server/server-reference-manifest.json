@@ -1,0 +1,16 @@
+{
+  "node": {
+    "faf114d11d020ea5b2ad826056c65ef637c42580": {
+      "workers": {
+        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fsnow%2FDocuments%2Fagency%2Fworks%2Frealtime-chat%2Factions%2FgeneratePortalLink.ts%22%2C%5B%22generatePortalLink%22%5D%5D%5D&__client_imported__=true!",
+        "app/pricing/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fsnow%2FDocuments%2Fagency%2Fworks%2Frealtime-chat%2Factions%2FgeneratePortalLink.ts%22%2C%5B%22generatePortalLink%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/page": "action-browser",
+        "app/pricing/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "fheAWxiorDneEgwjb2wYXXkwuc6orxEVneDbKczzvKE="
+}
