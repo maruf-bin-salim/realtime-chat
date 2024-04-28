@@ -12,7 +12,18 @@ function ChatListRow({ chatId }: { chatId: string }) {
   //   limitedSortedMessagesRef(chatId)
   // );
 
-  const messages: any = [];
+  const messages: any = [
+    {
+      user: {
+        name: "John Doe",
+        image: "/images/avatar.jpg",
+      },
+      translated: {
+        en: "Hello, how are you?",
+      },
+      timestamp: new Date(),
+    },
+  ];
   const loading: any = false;
   const error: any = false;
 

@@ -22,7 +22,11 @@ function ChatListRows({ initialChats }: { initialChats: any[] }) {
   //   }
   // );
 
-  const members: any = [];
+  const members: any = [
+    {
+      chatId: "1111111"
+    }
+  ]
   const loading: any = false;
   const error: any = false;
 
