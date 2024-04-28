@@ -27,7 +27,7 @@
 export default function UpgradeBanner() {
   return (
     <div>
-      <p>Upgrade to Pro to Unlock All Features!</p>
+      {/* <p>Upgrade to Pro to Unlock All Features!</p> */}
     </div>
   )
 }
