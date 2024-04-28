@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Subscription } from "@/types/Subscription";
+// import { Subscription } from "@/types/Subscription";
 
 export type LanguagesSupported =
   | "en"
@@ -33,39 +33,40 @@ const LANGUAGES_IN_FREE = 2;
 interface LanguageState {
   language: LanguagesSupported;
   setLanguage: (language: LanguagesSupported) => void;
-  getLanguages: (isPro: boolean) => LanguagesSupported[];
-  getNotSupportedLanguages: (isPro: boolean) => LanguagesSupported[];
+  getLanguages: () => LanguagesSupported[];
+  getNotSupportedLanguages: () => LanguagesSupported[];
 }
 
 export const useLanguageStore = create<LanguageState>()((set, get) => ({
   language: "en",
   setLanguage: (language: LanguagesSupported) => set({ language }),
-  getLanguages: (isPro: boolean) => {
+  getLanguages: () => {
     // If user is pro, return all supported languages
-    if (isPro)
+    // if (isPro)
       return Object.keys(LanguagesSupportedMap) as LanguagesSupported[];
 
     // If user is not pro, return only the first 2 supported languages
-    return Object.keys(LanguagesSupportedMap).slice(
-      0,
-      LANGUAGES_IN_FREE
-    ) as LanguagesSupported[];
+    // return Object.keys(LanguagesSupportedMap).slice(
+    //   0,
+    //   LANGUAGES_IN_FREE
+    // ) as LanguagesSupported[];
   },
-  getNotSupportedLanguages: (isPro: boolean) => {
-    if (isPro) return []; // No supported languages for "pro" users
+  getNotSupportedLanguages: () => {
+    // if (isPro) 
+    return []; // No supported languages for "pro" users
 
-    return Object.keys(LanguagesSupportedMap).slice(
-      LANGUAGES_IN_FREE
-    ) as LanguagesSupported[];
+    // return Object.keys(LanguagesSupportedMap).slice(
+    //   LANGUAGES_IN_FREE
+    // ) as LanguagesSupported[];
   },
 }));
 
-interface SubscriptionState {
-  subscription: Subscription | null | undefined;
-  setSubscription: (subscription: Subscription | null) => void;
-}
+// interface SubscriptionState {
+//   subscription: Subscription | null | undefined;
+//   setSubscription: (subscription: Subscription | null) => void;
+// }
 
-export const useSubscriptionStore = create<SubscriptionState>((set) => ({
-  subscription: undefined,
-  setSubscription: (subscription: Subscription | null) => set({ subscription }),
-}));
+// export const useSubscriptionStore = create<SubscriptionState>((set) => ({
+//   subscription: undefined,
+//   setSubscription: (subscription: Subscription | null) => set({ subscription }),
+// }));

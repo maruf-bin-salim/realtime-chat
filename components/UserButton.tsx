@@ -12,13 +12,13 @@ import UserAvatar from "./UserAvatar";
 // import { Session } from "next-auth";
 import { Button } from "./ui/button";
 // import { signIn, signOut } from "next-auth/react";
-import { useSubscriptionStore } from "@/store/store";
+// import { useSubscriptionStore } from "@/store/store";
 import LoadingSpinner from "./LoadingSpinner";
 import { StarIcon } from "lucide-react";
 import ManageAccountButton from "./ManageAccountButton";
 
-function UserButton({ session }: { session: Session | null }) {
-  const subscription = useSubscriptionStore((state) => state.subscription);
+function UserButton({ session }: { session: any | null }) {
+  const subscription = { role: "pro"}
   // Subscription listener
   if (!session)
     return (
@@ -49,7 +49,8 @@ function UserButton({ session }: { session: Session | null }) {
             space-x-1 text-[#00FFFF] animate-pulse"
               >
                 <StarIcon fill="#00FFFF" />
-                <p>PRO</p>
+                {/* <p>PRO</p> */}
+                <p>User</p>
               </DropdownMenuLabel>
 
               <DropdownMenuSeparator />
@@ -60,7 +61,7 @@ function UserButton({ session }: { session: Session | null }) {
             </>
           )}
 
-          <DropdownMenuItem onClick={() => signOut()}>
+          <DropdownMenuItem onClick={() => {}}>
             Sign Out
           </DropdownMenuItem>
         </DropdownMenuContent>

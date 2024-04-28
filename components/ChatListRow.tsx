@@ -1,7 +1,7 @@
 "use client";
 // import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Skeleton } from "./ui/skeleton";
-import { Message, limitedSortedMessagesRef } from "@/lib/converters/Message";
+// import { Message, limitedSortedMessagesRef } from "@/lib/converters/Message";
 import UserAvatar from "./UserAvatar";
 // import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ function ChatListRow({ chatId }: { chatId: string }) {
     return chatId.substring(0, n);
   }
 
-  const row = (message?: Message) => (
+  const row = (message?: any) => (
     <div
       key={chatId}
       onClick={() => router.push(`/chat/${chatId}`)}
@@ -72,7 +72,7 @@ function ChatListRow({ chatId }: { chatId: string }) {
 
       {messages?.length === 0 && !loading && row()}
 
-      {messages?.map((message) => row(message))}
+      {messages?.map((message: any) => row(message))}
     </div>
   );
 }

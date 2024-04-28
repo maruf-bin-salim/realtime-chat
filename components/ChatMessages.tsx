@@ -1,6 +1,6 @@
 "use client";
 
-import { Message, sortedMessagesRef } from "@/lib/converters/Message";
+// import { Message, sortedMessagesRef } from "@/lib/converters/Message";
 import { useLanguageStore } from "@/store/store";
 import { MessageCircleIcon } from "lucide-react";
 // import { Session } from "next-auth";
@@ -15,7 +15,7 @@ function ChatMessages({
   session,
 }: {
   chatId: string;
-  initialMessages: Message[];
+  initialMessages: any[];
   session: any | null;
 }) {
   const language = useLanguageStore((state) => state.language);
@@ -56,7 +56,7 @@ function ChatMessages({
         </div>
       )}
 
-      {messages?.map((message) => {
+      {messages?.map((message: any) => {
         const isSender = message.user.id === session?.user.id;
         return (
           <div key={message.id} className="flex my-2 items-end">

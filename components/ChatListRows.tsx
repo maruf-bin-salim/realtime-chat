@@ -1,16 +1,17 @@
 "use client";
 
-import {
-  ChatMembers,
-  chatMembersCollectionGroupRef,
-} from "@/lib/converters/ChatMembers";
+// import {
+//   ChatMembers,
+//   chatMembersCollectionGroupRef,
+// } from "@/lib/converters/ChatMembers";
 // import { useSession } from "next-auth/react";
 // import { useCollectionData } from "react-firebase-hooks/firestore";
 import { MessageSquare } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
 import ChatListRow from "./ChatListRow";
 
-function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
+// function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
+function ChatListRows({ initialChats }: { initialChats: any[] }) {
   // const { data: session } = useSession();
   let session: any = null;
 
@@ -20,7 +21,7 @@ function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
   //     initialValue: initialChats,
   //   }
   // );
-  
+
   const members: any = [];
   const loading: any = false;
   const error: any = false;
@@ -31,7 +32,7 @@ function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
         <MessageSquare className="h-10 w-10" />
         <h1 className="text-5xl font-extralight">Welcome!</h1>
         <h2 className="pb-10">
-          Let's get you started by creating your first chat!
+          {`Let's get you started by creating your first chat!`}
         </h2>
         <CreateChatButton isLarge />
       </div>
@@ -39,7 +40,7 @@ function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
 
   return (
     <div className="">
-      {members?.map((member, i) => {
+      {members?.map((member: any, i: any) => {
         return <ChatListRow key={member.chatId} chatId={member.chatId} />;
       })}
     </div>
