@@ -1,9 +1,21 @@
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import DemoGif from "../images/landingPage/demo.gif";
+import DemoGif from "../../images/landingPage/demo.gif";
+import { createSupabaseServerComponentClient } from "@/lib/supabase/server-client";
+
 
 export default async function Home() {
+
+
+  const { data: { session },
+    error,
+  } = await createSupabaseServerComponentClient().auth.getSession();
+
+  const user = session?.user;
+
+  console.log(user);
+
   return (
     <main className="dark:bg-black">
       <div className="relative isolate pt-14 dark:bg-black"></div>

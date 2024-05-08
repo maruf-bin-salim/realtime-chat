@@ -6,10 +6,19 @@ import { MessagesSquareIcon } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
 import UpgradeBanner from "./UpgradeBanner";
 import LanguageSelect from "./LanguageSelect";
+import { createSupabaseServerComponentClient } from "@/lib/supabase/server-client";
 
 async function Header() {
 
-  let session = null;
+
+  const { data: { session },
+    error,
+  } = await createSupabaseServerComponentClient().auth.getSession();
+
+  const user = session?.user;
+
+  console.log(user);
+
 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black">
