@@ -65,14 +65,14 @@ function UserButton({ session }: { session: any | null }) {
               >
                 <StarIcon fill="#00FFFF" />
                 {/* <p>PRO</p> */}
-                <p>User</p>
+                <p>{session?.user?.email}</p>
               </DropdownMenuLabel>
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem>
+              {/* <DropdownMenuItem>
                 <ManageAccountButton />
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </>
           )}
 

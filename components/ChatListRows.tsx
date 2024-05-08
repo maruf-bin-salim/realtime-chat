@@ -9,6 +9,7 @@
 import { MessageSquare } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
 import ChatListRow from "./ChatListRow";
+import { useEffect } from "react";
 
 // function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
 function ChatListRows({ initialChats }: { initialChats: any[] }) {
@@ -27,9 +28,11 @@ function ChatListRows({ initialChats }: { initialChats: any[] }) {
       chatId: "1111111"
     }
   ]
+
   const loading: any = false;
   const error: any = false;
 
+ 
   if (members?.length === 0)
     return (
       <div className="flex flex-col items-center justify-center pt-40 space-y-2">
