@@ -11,7 +11,7 @@ export default function SignUp() {
         provider: "google",
         options: {
           redirectTo: `${location.origin}/auth/callback?next=${
-            ""
+            "/chat"
           }`,
         },
       });
