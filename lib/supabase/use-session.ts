@@ -5,20 +5,17 @@ import { createSupabaseBrowserClient } from "./browser-client";
 import { Session } from "@supabase/supabase-js";
 
 export default function useSession() {
+  const supabase = createSupabaseBrowserClient();
+
   const [session, setSession] = useState<Session | null>(null);
-
   useEffect(() => {
-    const supabase = createSupabaseBrowserClient();
 
-    const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
+    let data = supabase.auth.onAuthStateChange((event, session)=>{
       setSession(session);
-    };
+    });
 
-    getSession();
+    return () => data?.data?.subscription?.unsubscribe();
+
   }, []);
 
   return session;

@@ -15,6 +15,7 @@ import useSession from "@/lib/supabase/use-session";
 async function Header() {
 
   const session = useSession();
+  
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black">
       <nav className="flex flex-col sm:flex-row items-center p-5 pl-2 bg-white dark:bg-black max-w-7xl mx-auto">
