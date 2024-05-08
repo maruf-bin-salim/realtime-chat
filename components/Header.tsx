@@ -1,4 +1,3 @@
-
 import DarkModeToggle from "./DarkModeToggle";
 import Logo from "./Logo";
 import UserButton from "./UserButton";
@@ -7,21 +6,18 @@ import { MessagesSquareIcon } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
 import UpgradeBanner from "./UpgradeBanner";
 import LanguageSelect from "./LanguageSelect";
-import useSession from "@/lib/supabase/use-session";
 import { createSupabaseServerComponentClient } from "@/lib/supabase/server-client";
 
 async function Header() {
 
 
-  // const { data: { session },
-  //   error: sessionError,
-  // } = await createSupabaseServerComponentClient().auth.getSession();
+  const { data: { session },
+    error,
+  } = await createSupabaseServerComponentClient().auth.getSession();
 
+  const user = session?.user;
 
-  const res = await createSupabaseServerComponentClient().auth.getUser();
-  const user = res.data.user;
-  const session = user ? {user: user} : null;
-
+  console.log(user);
 
 
   return (
