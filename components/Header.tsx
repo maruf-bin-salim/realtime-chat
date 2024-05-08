@@ -11,13 +11,12 @@ import { createSupabaseServerComponentClient } from "@/lib/supabase/server-clien
 async function Header() {
 
 
-  const { data: { session },
+  const { data: { user },
     error,
-  } = await createSupabaseServerComponentClient().auth.getSession();
+  } = await createSupabaseServerComponentClient().auth.getUser();
 
-  const user = session?.user;
+  const session = user ? {user} : null;
 
-  console.log(user);
 
 
   return (

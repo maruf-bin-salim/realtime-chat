@@ -1,5 +1,6 @@
 {
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/auth/callback/route": "app/auth/callback/route.js",
   "/(user)/chat/page": "app/(user)/chat/page.js",
   "/(auth)/signin/page": "app/(auth)/signin/page.js",
   "/(user)/chat/[chatId]/page": "app/(user)/chat/[chatId]/page.js",
