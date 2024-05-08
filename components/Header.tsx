@@ -13,11 +13,15 @@ import { createSupabaseServerComponentClient } from "@/lib/supabase/server-clien
 async function Header() {
 
 
-  const { data: { session },
-    error: sessionError,
-  } = await createSupabaseServerComponentClient().auth.getSession();
+  // const { data: { session },
+  //   error: sessionError,
+  // } = await createSupabaseServerComponentClient().auth.getSession();
 
-  const user = session?.user;
+
+  const res = await createSupabaseServerComponentClient().auth.getUser();
+  const user = res.data.user;
+  const session = user ? {user: user} : null;
+
 
 
   return (
@@ -26,7 +30,7 @@ async function Header() {
         <Logo />
         <div className="flex-1 flex items-center justify-end space-x-4">
           <LanguageSelect />
-          {session ? (
+          {user ? (
             <>
               <Link href={"/chat"} prefetch={false}>
                 <MessagesSquareIcon className="text-black dark:text-white" />
@@ -37,7 +41,7 @@ async function Header() {
             null
             // <Link href="/pricing">Pricing</Link>
           )}
-
+          
           <DarkModeToggle />
 
           <UserButton session={session} />

@@ -1,6 +1,6 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/auth/callback/route": "app/auth/callback/route.js",
   "/(root)/page": "app/(root)/page.js",
   "/(user)/chat/page": "app/(user)/chat/page.js",
   "/(auth)/signin/page": "app/(auth)/signin/page.js",
