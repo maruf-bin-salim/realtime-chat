@@ -12,9 +12,6 @@ export function createSupabaseServerClient(component: boolean = false) {
     URL,
     ANON_KEY,
     {
-      auth: {
-        autoRefreshToken: true,
-      },
       cookies: {
         get(name: string) {
           return getCookie(name, { cookies });

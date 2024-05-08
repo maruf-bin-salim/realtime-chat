@@ -1,4 +1,4 @@
-'use client'
+
 import DarkModeToggle from "./DarkModeToggle";
 import Logo from "./Logo";
 import UserButton from "./UserButton";
@@ -8,10 +8,16 @@ import CreateChatButton from "./CreateChatButton";
 import UpgradeBanner from "./UpgradeBanner";
 import LanguageSelect from "./LanguageSelect";
 import useSession from "@/lib/supabase/use-session";
+import { createSupabaseServerComponentClient } from "@/lib/supabase/server-client";
 
 async function Header() {
 
-  const session = useSession();
+
+  const { data: { session },
+    error: sessionError,
+  } = await createSupabaseServerComponentClient().auth.getSession();
+
+  const user = session?.user;
 
 
   return (
