@@ -1,3 +1,5 @@
+'use client'
+
 import DarkModeToggle from "./DarkModeToggle";
 import Logo from "./Logo";
 import UserButton from "./UserButton";
@@ -6,26 +8,20 @@ import { MessagesSquareIcon } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
 import UpgradeBanner from "./UpgradeBanner";
 import LanguageSelect from "./LanguageSelect";
-import { createSupabaseServerComponentClient } from "@/lib/supabase/server-client";
+import useSession from "@/lib/supabase/use-session";
+
+
 
 async function Header() {
 
-
-  const { data: { user },
-    error,
-  } = await createSupabaseServerComponentClient().auth.getUser();
-
-  const session = user ? {user} : null;
-
-
-
+  const session = useSession();
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black">
       <nav className="flex flex-col sm:flex-row items-center p-5 pl-2 bg-white dark:bg-black max-w-7xl mx-auto">
         <Logo />
         <div className="flex-1 flex items-center justify-end space-x-4">
           <LanguageSelect />
-          {user ? (
+          {session ? (
             <>
               <Link href={"/chat"} prefetch={false}>
                 <MessagesSquareIcon className="text-black dark:text-white" />
