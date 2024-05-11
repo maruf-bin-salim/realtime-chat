@@ -110,25 +110,6 @@ function InviteUser({ chatId }: { chatId: string }) {
       return;
     }
 
-    // update the user.user_groups in users table
-    let userGroups = invitedUser.user_groups || [];
-    userGroups.push(chatId);
-    
-    const { data: updatedUser, error: updatedUserError } = await supabase.from('users').update({ user_groups: userGroups }).eq('user_id', invitedUser.user_id);
-
-    if (updatedUserError) {
-      toast({
-        title: "Error!",
-        description: "Failed to update user account!",
-        className: "bg-red-600 text-white",
-        duration: 2000,
-      });
-      console.error(updatedUserError);
-      setOpen(false);
-      form.reset();
-      return;
-    }
-
     // show success message
     toast({
       title: "User added to chat!",

@@ -25,7 +25,6 @@ function CreateChatButton({ isLarge }: { isLarge?: boolean }) {
   const [userAccount, setUserAccount] = useState<{
     fullname: string,
     email: string,
-    user_groups: string[],
     user_id: string,
     avatar: string,
   } | null>(null);
@@ -109,26 +108,6 @@ function CreateChatButton({ isLarge }: { isLarge?: boolean }) {
       return;
     }
 
-    // update user_groups in user account
-    const updatedUserGroups = [...userAccount.user_groups, data.id];
-
-    const { error: updatedUserError } = await supabase.from('users').update({ user_groups: updatedUserGroups }).eq('user_id', userAccount.user_id);
-
-    // get updated user account
-    const { data: updatedUser, error: updatedUserError2 } = await supabase.from('users').select('*').eq('user_id', userAccount.user_id).single();
-    setUserAccount(updatedUser);
-
-    if (!error) {
-      setUserAccount(updatedUser);
-      console.log(updatedUserGroups);
-
-      toast({
-        title: "Success!",
-        description: "You have successfully created a new chat!",
-        className: "bg-green-600 text-white",
-        duration: 2000,
-      });
-    }
 
     // else chat creation failed
     else {
