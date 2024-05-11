@@ -9,12 +9,40 @@ import CreateChatButton from "./CreateChatButton";
 import UpgradeBanner from "./UpgradeBanner";
 import LanguageSelect from "./LanguageSelect";
 import useSession from "@/lib/supabase/use-session";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 
 
 function Header() {
 
   const session = useSession();
+
+  const [isSigninPage, setIsSigninPage] = useState(false);
+  const pathname = usePathname()
+
+
+  useEffect(()=>{
+
+    if(pathname) {
+      console.log(pathname)
+      if(pathname === '/signin') {
+        setIsSigninPage(true);
+      }
+      else {
+        setIsSigninPage(false);
+      }
+    }
+
+  }, [pathname])
+
+  
+
+  if (!pathname || isSigninPage) {
+    return null;
+  }
+
+
 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black">

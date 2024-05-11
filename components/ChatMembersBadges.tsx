@@ -7,12 +7,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import { Badge } from "./ui/badge";
 import UserAvatar from "./UserAvatar";
 
-function ChatMembersBadges({ chatId, memberBadges }: { chatId: string, memberBadges: any[] }) {
-  // const [members, loading, error] = useCollectionData<ChatMembers>(
-  //   chatMembersRef(chatId)
-  // );
-
-  // const adminId = useAdminId({ chatId });
+function ChatMembersBadges({ memberBadges }: { memberBadges: any[] }) {
 
   const members: any[] = memberBadges;
   const loading = false;

@@ -1,14 +1,9 @@
-// import { authOptions } from "@/auth";
 import AdminControls from "@/components/AdminControls";
 import ChatInput from "@/components/ChatInput";
 import ChatMembersBadges from "@/components/ChatMembersBadges";
 import ChatMessages from "@/components/ChatMessages";
 import ChatPermissionsError from "@/components/ChatPermissionsError";
 import { createSupabaseServerClient } from "@/lib/supabase/server-client";
-// import { chatMembersRef } from "@/lib/converters/ChatMembers";
-// import { sortedMessagesRef } from "@/lib/converters/Message";
-// import { getDocs } from "firebase/firestore";
-// import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -81,7 +76,7 @@ async function ChatPage({ params: { chatId } }: Props) {
         hasAccess && (
           <>
             <AdminControls chatId={chatId} isAdmin={isCurrentUserAdmin} />
-            <ChatMembersBadges chatId={chatId} memberBadges={memberBadges} />
+            <ChatMembersBadges memberBadges={memberBadges} />
 
             <div className="flex-1">
               <ChatMessages
