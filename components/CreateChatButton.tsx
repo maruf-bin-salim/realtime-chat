@@ -117,68 +117,6 @@ function CreateChatButton({ isLarge }: { isLarge?: boolean }) {
     });
 
     setLoading(false);
-
-
-    // // Check if user is pro and limit them creating a new chat.
-
-    // const noOfChats = (
-    //   await getDocs(chatMembersCollectionGroupRef(session.user.id))
-    // ).docs.map((doc) => doc.data()).length;
-
-    // const isPro =
-    //   subscription?.role === "pro" && subscription.status === "active";
-
-    // if (!isPro && noOfChats >= 3) {
-    //   toast({
-    //     title: "Free plan limit exceeded!",
-    //     description:
-    //       "You have exceeded the free plan limit. Please upgrade to the PRO plan to create more chats.",
-    //     variant: "destructive",
-    //     action: (
-    //       <ToastAction
-    //         altText="Upgrade"
-    //         onClick={() => router.push("/register")}
-    //         className="w-96 border border-white rounded-lg p-1"
-    //       >
-    //         Upgrade to PRO
-    //       </ToastAction>
-    //     ),
-    //   });
-    //   setLoading(false);
-
-    //   return;
-    // }
-
-    // const chatId = uuidv4();
-
-    // await setDoc(addChatRef(chatId, session.user.id), {
-    //   userId: session.user.id!,
-    //   email: session.user.email!,
-    //   timestamp: serverTimestamp(),
-    //   isAdmin: true,
-    //   chatId: chatId,
-    //   image: session.user.image || "",
-    // })
-    //   .then(() => {
-    //     toast({
-    //       title: "Success!",
-    //       description: "You have successfully created a new chat!",
-    //       className: "bg-green-600 text-white",
-    //       duration: 2000,
-    //     });
-    //     router.push(`/chat/${chatId}`);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //     toast({
-    //       title: "Error!",
-    //       description: "There was an error creating your chat!",
-    //       variant: "destructive",
-    //     });
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   };
 
 

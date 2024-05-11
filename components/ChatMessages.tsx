@@ -1,11 +1,8 @@
 "use client";
 
-// import { Message, sortedMessagesRef } from "@/lib/converters/Message";
 import { useLanguageStore } from "@/store/store";
 import { MessageCircleIcon } from "lucide-react";
-// import { Session } from "next-auth";
 import { createRef, use, useEffect } from "react";
-// import { useCollectionData } from "react-firebase-hooks/firestore";
 import LoadingSpinner from "./LoadingSpinner";
 import UserAvatar from "./UserAvatar";
 
@@ -21,12 +18,7 @@ function ChatMessages({
   const language = useLanguageStore((state) => state.language);
   const messagesEndRef = createRef<HTMLDivElement>();
 
-  // const [messages, loading, error] = useCollectionData<Message>(
-  //   sortedMessagesRef(chatId),
-  //   {
-  //     initialValue: initialMessages,
-  //   }
-  // );
+
 
   const x: any = [
     {
