@@ -67,6 +67,13 @@ function ChatListRows({ initialChats }: { initialChats: any[] }) {
       }
     }
 
+    // sort by last_message_sent_at
+
+    chatGroups.sort((a, b) => {
+      let x = b.last_text_sent_at - a.last_text_sent_at;
+      return x;
+    });
+
     setChatGroups(chatGroups);
     setLoading(false);
 

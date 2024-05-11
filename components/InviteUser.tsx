@@ -36,10 +36,11 @@ const formSchema = z.object({
 
 function InviteUser({ chatId }: { chatId: string }) {
   const { toast } = useToast();
-  const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [openInviteLink, setOpenInviteLink] = useState(false);
+
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -137,6 +138,7 @@ function InviteUser({ chatId }: { chatId: string }) {
     });
     setOpen(false);
     form.reset();
+    router.refresh();
   }
 
   return (

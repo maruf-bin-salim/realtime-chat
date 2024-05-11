@@ -33,8 +33,37 @@ function DeleteChatButton({ chatId }: { chatId: string }) {
     });
 
     console.log("Deleting: ", chatId);
-    // wait for 3 seconds
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    // get the chat_group from chat_groups
+    const { data: chatGroup, error: chatGroupError } = await supabase.from('chat_groups').select('*').eq('id', chatId).single();
+    let users_with_permission = chatGroup?.users_with_permission || [];
+
+    let usersUpdateError = false;
+    // update users table to remove chat from user's user_groups (promise.all)
+    for (let i = 0; i < users_with_permission.length; i++) {
+      const user_id = users_with_permission[i];
+      const { data, error } = await supabase.from('users').select('user_groups').eq('user_id', user_id).single();
+      let user_groups = data?.user_groups || [];
+      user_groups = user_groups.filter((group: string) => group !== chatId);
+      const { data: userData, error: userError } = await supabase.from('users').update({ user_groups }).eq('user_id', user_id);
+      if (userError) {
+        usersUpdateError = true;
+      }
+    }
+
+
+
+    if (usersUpdateError || chatGroupError) {
+      toast({
+        title: "Error!",
+        description: "Failed to delete chat!",
+        className: "bg-red-600 text-white",
+        duration: 2000,
+      });
+      setOpen(false);
+      return;
+    }
+
     // delete chat from chat_groups
     const { data, error } = await supabase.from('chat_groups').delete().eq('id', chatId);
 
@@ -45,21 +74,20 @@ function DeleteChatButton({ chatId }: { chatId: string }) {
         className: "bg-red-600 text-white",
         duration: 2000,
       });
-      console.error(error);
       setOpen(false);
+      return;
     }
 
-    else {
 
-      toast({
-        title: "Success!",
-        description: "You have successfully deleted your chat!",
-        className: "bg-green-600 text-white",
-        duration: 2000,
-      });
-      setOpen(false);
-      router.push("/chat");
-    }
+    toast({
+      title: "Success!",
+      description: "You have successfully deleted your chat!",
+      className: "bg-green-600 text-white",
+      duration: 2000,
+    });
+    setOpen(false);
+    router.push("/chat");
+
   };
 
   return (
