@@ -13,23 +13,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useToast } from "./ui/use-toast";
 
 function ShareLink({
-  isOpen,
   chatId,
-  setIsOpen,
 }: {
-  isOpen: boolean;
   chatId: string;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const { toast } = useToast();
 
   const host = window.location;
 
   const linkToChat =`${host}`;
+  const [isOpen, setIsOpen] = useState(false);
 
   async function copyToClipboard() {
     try {
