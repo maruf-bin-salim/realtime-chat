@@ -11,8 +11,6 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { useToast } from "./ui/use-toast";
-// import { useSession } from "next-auth/react";
-// import useAdminId from "@/hooks/useAdminId";
 import { useRouter } from "next/navigation";
 import useSession from "@/lib/supabase/use-session";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
@@ -32,7 +30,6 @@ function DeleteChatButton({ chatId }: { chatId: string }) {
       className: "bg-yellow-300 text-white",
     });
 
-    console.log("Deleting: ", chatId);
 
     // get the chat_group from chat_groups
     const { data: chatGroup, error: chatGroupError } = await supabase.from('chat_groups').select('*').eq('id', chatId).single();

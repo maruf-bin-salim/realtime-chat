@@ -33,7 +33,6 @@ function ShareLink({
   async function copyToClipboard() {
     try {
       await navigator.clipboard.writeText(linkToChat);
-      console.log("URL copied to clipboard");
 
       toast({
         title: "Copied Successfully!",

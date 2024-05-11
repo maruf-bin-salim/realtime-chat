@@ -23,7 +23,6 @@ async function ChatsPage({ searchParams: { error } }: Props) {
     redirect("/");
   }
 
-  console.log(user);
 
   return (
     <div className="flex-1 w-full flex flex-col max-w-6xl mx-auto">

@@ -27,8 +27,6 @@ function ChatListRows({ initialChats }: { initialChats: any[] }) {
   async function getAllUserChatGroups(user_id: String) {
     const { data, error } = await supabase.from('chat_groups').select('*');
 
-    console.log('all chat groups', data);
-    console.log('user_id', user_id);
 
 
     if (error) {
@@ -66,7 +64,6 @@ function ChatListRows({ initialChats }: { initialChats: any[] }) {
 
   useEffect(() => {
     if (session && userAccount) {
-      console.log('getting all user chat groups');
 
       getAllUserChatGroups(userAccount.user_id);
 
@@ -77,7 +74,6 @@ function ChatListRows({ initialChats }: { initialChats: any[] }) {
     async function setUserAccountData(session: any) {
       setLoading(true);
       const { data, error } = await supabase.from('users').select('*').eq('email', session.user.email).single();
-      console.log('data', data);
       setUserAccount(data);
     }
     if (session) {
@@ -94,7 +90,6 @@ function ChatListRows({ initialChats }: { initialChats: any[] }) {
     const subscription = supabase
       .channel('chat_channel')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'chat_groups' }, payload => {
-        console.log('Change received!', payload);
         setLoading(true);
         getAllUserChatGroups(userAccount.user_id);
       })

@@ -34,16 +34,9 @@ async function ChatPage({ params: { chatId } }: Props) {
   let hasAccess = users_with_permission.includes(userAccount?.user_id);
 
 
-  // fetch all users from users table whos id is in users_with_permission array
 
-
-  // const { data, error } = await supabase
-  // .from('countries')
-  // .select()
-  // .in('name', ['Albania', 'Algeria'])
 
   const { data: chatMembers, error: chatMembersError } = await supabase.from('users').select('*').in('user_id', users_with_permission);
-  console.log('chatMembers', chatMembers);
 
   let admin_id = chatGroup?.admin_id;
 
