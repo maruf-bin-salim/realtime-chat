@@ -9,10 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import UserAvatar from "./UserAvatar";
-// import { Session } from "next-auth";
 import { Button } from "./ui/button";
-// import { signIn, signOut } from "next-auth/react";
-// import { useSubscriptionStore } from "@/store/store";
 import LoadingSpinner from "./LoadingSpinner";
 import { StarIcon } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
@@ -31,7 +28,6 @@ function UserButton({ session }: { session: any | null }) {
     router.refresh();
   };
 
-  // Subscription listener
   if (!session)
     return (
       <Link href="/signin">
@@ -63,15 +59,12 @@ function UserButton({ session }: { session: any | null }) {
             space-x-1 text-[#00FFFF] animate-pulse"
               >
                 <StarIcon fill="#00FFFF" />
-                {/* <p>PRO</p> */}
                 <p>{session?.user?.email}</p>
               </DropdownMenuLabel>
 
               <DropdownMenuSeparator />
 
-              {/* <DropdownMenuItem>
-                <ManageAccountButton />
-              </DropdownMenuItem> */}
+           
             </>
           )}
 

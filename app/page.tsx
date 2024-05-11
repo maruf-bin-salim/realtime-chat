@@ -15,7 +15,6 @@ export default async function Home() {
 
   user = user || null;
 
-  // const user = session?.user || null;
 
   // make sure user exists on db
   if (user) {

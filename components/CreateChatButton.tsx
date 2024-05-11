@@ -3,10 +3,8 @@
 import { MessageSquarePlus } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
-// import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useToast } from "./ui/use-toast";
-// import { useSubscriptionStore } from "@/store/store";
 import LoadingSpinner from "./LoadingSpinner";
 
 import { ToastAction } from "@radix-ui/react-toast";
@@ -14,7 +12,6 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import useSession from "@/lib/supabase/use-session";
 
 function CreateChatButton({ isLarge }: { isLarge?: boolean }) {
-  // const { data: session } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -63,7 +60,6 @@ function CreateChatButton({ isLarge }: { isLarge?: boolean }) {
 
 
   const createNewChat = async () => {
-    //  logic to create a new chat
     if (!session?.user.id || !userAccount) {
       toast({
         title: "Error!",

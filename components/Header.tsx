@@ -58,7 +58,6 @@ function Header() {
             </>
           ) : (
             null
-            // <Link href="/pricing">Pricing</Link>
           )}
           
           <DarkModeToggle />

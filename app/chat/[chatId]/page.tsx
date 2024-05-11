@@ -13,7 +13,6 @@ type Props = {
 };
 
 async function ChatPage({ params: { chatId } }: Props) {
-  // const session = await getServerSession(authOptions);
   const supabase = createSupabaseServerClient();
   const { data: { session },
     error: sessionError,

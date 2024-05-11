@@ -22,7 +22,6 @@ function ChatListRow({ chatId, chatGroup }: { chatId: string, chatGroup: any }) 
   const error: any = false;
 
   const language = useLanguageStore((state) => state.language);
-  // const { data: session } = useSession();
   let session: any = null;
   const router = useRouter();
 
@@ -66,7 +65,6 @@ function ChatListRow({ chatId, chatGroup }: { chatId: string, chatGroup: any }) 
               ? "Get the conversation started!"
               : chatGroup?.last_text
           }
-          {/* {chatGroup?.translated?.[language] || "Get the conversation started!"} */}
         </p>
       </div>
 

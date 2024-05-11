@@ -1,5 +1,4 @@
 import { create } from "zustand";
-// import { Subscription } from "@/types/Subscription";
 
 export type LanguagesSupported =
   | "en"
@@ -41,32 +40,13 @@ export const useLanguageStore = create<LanguageState>()((set, get) => ({
   language: "en",
   setLanguage: (language: LanguagesSupported) => set({ language }),
   getLanguages: () => {
-    // If user is pro, return all supported languages
-    // if (isPro)
-      return Object.keys(LanguagesSupportedMap) as LanguagesSupported[];
 
-    // If user is not pro, return only the first 2 supported languages
-    // return Object.keys(LanguagesSupportedMap).slice(
-    //   0,
-    //   LANGUAGES_IN_FREE
-    // ) as LanguagesSupported[];
+      return Object.keys(LanguagesSupportedMap) as LanguagesSupported[];
   },
   getNotSupportedLanguages: () => {
-    // if (isPro) 
-    return []; // No supported languages for "pro" users
+    return []; 
 
-    // return Object.keys(LanguagesSupportedMap).slice(
-    //   LANGUAGES_IN_FREE
-    // ) as LanguagesSupported[];
+
   },
 }));
 
-// interface SubscriptionState {
-//   subscription: Subscription | null | undefined;
-//   setSubscription: (subscription: Subscription | null) => void;
-// }
-
-// export const useSubscriptionStore = create<SubscriptionState>((set) => ({
-//   subscription: undefined,
-//   setSubscription: (subscription: Subscription | null) => set({ subscription }),
-// }));
