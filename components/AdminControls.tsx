@@ -1,4 +1,3 @@
-import { Delete } from "lucide-react";
 import InviteUser from "./InviteUser";
 import DeleteChatButton from "./DeleteChatButton";
 import ShareLink from "./ShareLink";
