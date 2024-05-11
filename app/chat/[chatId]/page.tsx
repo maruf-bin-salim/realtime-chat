@@ -78,7 +78,7 @@ async function ChatPage({ params: { chatId } }: Props) {
             <AdminControls chatId={chatId} isAdmin={isCurrentUserAdmin} />
             <ChatMembersBadges memberBadges={memberBadges} />
 
-            <div className="flex-1 pb-2 overflow-y-scroll">
+            <div className="flex-1 pb-2 overflow-y-scroll mb-[50px] md:mb-[0px]">
               <ChatMessages
                 chatId={chatId}
                 session={session}
