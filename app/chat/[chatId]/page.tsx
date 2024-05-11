@@ -31,7 +31,6 @@ async function ChatPage({ params: { chatId } }: Props) {
     <div className="flex-1 w-full flex flex-col max-w-6xl mx-auto h-screen pb-2">
 
       <AdminControls chatId={chatId} />
-
       <ChatMembersBadges chatId={chatId} />
 
       <div className="flex-1">

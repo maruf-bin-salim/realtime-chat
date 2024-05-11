@@ -29,10 +29,7 @@ function ShareLink({
 
   const host = window.location;
 
-  const linkToChat =
-    process.env.NOVE_ENV === "development"
-      ? `http://${host}/chat/${chatId}`
-      : `https://${host}/chat/${chatId}`;
+  const linkToChat =`${host}`;
 
   async function copyToClipboard() {
     try {
