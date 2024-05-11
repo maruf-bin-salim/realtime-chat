@@ -2,9 +2,29 @@ import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DemoGif from "../images/landingPage/demo.gif";
+import { createSupabaseServerComponentClient } from "@/lib/supabase/server-client";
 
 
 export default async function Home() {
+
+  let supabase = createSupabaseServerComponentClient();
+
+  let { data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  user = user || null;
+
+  // const user = session?.user || null;
+
+  // make sure user exists on db
+  if (user) {
+    let {data, error} = await supabase.from('users').upsert({
+      email: user?.email,
+      avatar: user?.user_metadata?.avatar_url || null,
+      fullname: user?.user_metadata?.full_name || user?.user_metadata?.name
+    });
+  }
 
   return (
     <main className="dark:bg-black">
@@ -20,7 +40,7 @@ export default async function Home() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
-                href={"/chat"}
+                href={user ? '/chat' : '/signin'}
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline
               focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >

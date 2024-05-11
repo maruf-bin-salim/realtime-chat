@@ -26,7 +26,7 @@ async function ChatsPage({ searchParams: { error } }: Props) {
   console.log(user);
 
   return (
-    <div className="">
+    <div className="flex-1 w-full flex flex-col max-w-6xl mx-auto">
       {error && (
         <div className="m-2">
           <ChatPermissionsError />

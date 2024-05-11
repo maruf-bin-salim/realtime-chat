@@ -19,7 +19,7 @@ async function ChatPage({ params: { chatId } }: Props) {
   // const session = await getServerSession(authOptions);
   let session = null;
 
-  const initialMessages : any[]= []
+  const initialMessages: any[] = []
 
   // const hasAccess = (await getDocs(chatMembersRef(chatId))).docs
   //   .map((doc) => doc.id)
@@ -28,7 +28,8 @@ async function ChatPage({ params: { chatId } }: Props) {
   // if (!hasAccess) redirect("/chat?error=permission");
 
   return (
-    <>
+    <div className="flex-1 w-full flex flex-col max-w-6xl mx-auto h-screen pb-2">
+
       <AdminControls chatId={chatId} />
 
       <ChatMembersBadges chatId={chatId} />
@@ -42,7 +43,8 @@ async function ChatPage({ params: { chatId } }: Props) {
       </div>
 
       <ChatInput chatId={chatId} />
-    </>
+    </div>
+
   );
 }
 
