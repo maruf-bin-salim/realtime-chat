@@ -11,7 +11,7 @@ function ChatListRow({ chatId, chatGroup }: { chatId: string, chatGroup: any }) 
     {
       user: {
         name: chatGroup?.name || "John Doe1",
-        image: "/images/avatar.jpg",
+        image: "/avatar.png",
       },
       translated: {
         en: "Hello, how are you?",

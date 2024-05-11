@@ -24,7 +24,7 @@ function ChatMessages({
     {
       user: {
         name: "John Doe",
-        image: "/images/avatar.jpg",
+        image: "/avatar.png",
       },
       translated: {
         en: "Hello, how are you?",
