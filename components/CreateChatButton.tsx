@@ -31,8 +31,27 @@ function CreateChatButton({ isLarge }: { isLarge?: boolean }) {
   } | null>(null);
 
   async function fetchUserAccount(session: any) {
+    let user = session?.user;
+
+
     const { data, error } = await supabase.from('users').select('*').eq('email', session.user.email).single();
-    setUserAccount(data);
+
+    if(!data || error || data.length === 0) {
+
+      let userAccountData = {
+        email: user?.email,
+        avatar: user?.user_metadata?.avatar_url || null,
+        fullname: user?.user_metadata?.full_name || user?.user_metadata?.name
+      }
+      let {data: userData, error: userError} = await supabase.from('users').upsert(userAccountData).select('*').single();
+      if(userData) {
+        setUserAccount(userData);
+      }
+    }
+    else {
+      setUserAccount(data);
+    }
+
   }
   useEffect(() => {
 
