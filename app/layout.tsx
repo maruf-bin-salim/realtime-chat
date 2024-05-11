@@ -15,24 +15,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-        {/* <body className="flex flex-col min-h-screen bg-white dark:bg-black"> */}
+    <html lang="en"  suppressHydrationWarning={true}>
+
+      <body className="flex flex-col min-h-screen bg-white dark:bg-black">
         {/* <FirebaseAuthProvider> */}
         {/* <SubscriptionProvider> */}
-        {/* <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                <Header /> */}
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          {children}
 
-        {/* <Toaster />
-              </ThemeProvider> */}
+          <Toaster />
+        </ThemeProvider>
         {/* </SubscriptionProvider> */}
         {/* </FirebaseAuthProvider> */}
-        {/* </body> */}
-    </>
+      </body>
+    </html>
+
   );
 }

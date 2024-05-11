@@ -1,7 +1,7 @@
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import DemoGif from "../../images/landingPage/demo.gif";
+import DemoGif from "../images/landingPage/demo.gif";
 
 
 export default async function Home() {
@@ -26,16 +26,7 @@ export default async function Home() {
               >
                 Get started
               </Link>
-              {/* <Link
-                href="/pricing"
-                className="flex items-center text-sm font-semibold leading-6 text-gray-900 dark:text-gray-300"
-              >
-                View Pricing{" "}
-                <span aria-hidden="true">
-                  {" "}
-                  <MoveRight size={20} />{" "}
-                </span>
-              </Link> */}
+
             </div>
           </div>
 
