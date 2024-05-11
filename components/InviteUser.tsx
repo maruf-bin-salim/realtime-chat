@@ -28,6 +28,7 @@ import { ToastAction } from "./ui/toast";
 import { useRouter } from "next/navigation";
 import ShareLink from "./ShareLink";
 import useSession from "@/lib/supabase/use-session";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -46,6 +47,7 @@ function InviteUser({ chatId }: { chatId: string }) {
       email: "",
     },
   });
+  const supabase = createSupabaseBrowserClient();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
 
@@ -55,9 +57,10 @@ function InviteUser({ chatId }: { chatId: string }) {
       className: "bg-yellow-300 text-white",
     });
 
-    let invitedUser = true;
+    const {data: invitedUser, error: invitedUserError} = await supabase.from('users').select('*').eq('email', values.email).single();
 
-    if (!invitedUser) {
+
+    if (!invitedUser || invitedUserError) {
       toast({
         title: "User not found!",
         description:
@@ -69,8 +72,61 @@ function InviteUser({ chatId }: { chatId: string }) {
       return;
     }
 
-    // load for 3 seconds
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // get users_with_permission array from chat_groups table
+    const { data: chatGroup, error: chatGroupError } = await supabase.from('chat_groups').select('*').eq('id', chatId).single();
+
+    let users_with_permission = chatGroup?.users_with_permission || [];
+
+    // see if user is already in the chat
+    if (users_with_permission.includes(invitedUser.user_id)) {
+      toast({
+        title: "User already in chat!",
+        description:
+          "The user you are trying to add is already in this chat!",
+        variant: "destructive",
+      });
+      setOpen(false);
+      form.reset();
+      return;
+    }
+
+    // add user to users_with_permission array
+    users_with_permission.push(invitedUser.user_id);
+
+    // update chat_groups table with new users_with_permission array
+    const { data, error } = await supabase.from('chat_groups').update({ users_with_permission }).eq('id', chatId);
+
+    if (error) {
+      toast({
+        title: "Error!",
+        description: "Failed to add user to chat!",
+        className: "bg-red-600 text-white",
+        duration: 2000,
+      });
+      console.error(error);
+      setOpen(false);
+      form.reset();
+      return;
+    }
+
+    // update the user.user_groups in users table
+    let userGroups = invitedUser.user_groups || [];
+    userGroups.push(chatId);
+    
+    const { data: updatedUser, error: updatedUserError } = await supabase.from('users').update({ user_groups: userGroups }).eq('user_id', invitedUser.user_id);
+
+    if (updatedUserError) {
+      toast({
+        title: "Error!",
+        description: "Failed to update user account!",
+        className: "bg-red-600 text-white",
+        duration: 2000,
+      });
+      console.error(updatedUserError);
+      setOpen(false);
+      form.reset();
+      return;
+    }
 
     // show success message
     toast({
