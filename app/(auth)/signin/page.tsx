@@ -1,4 +1,3 @@
-
 'use client'
 
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
