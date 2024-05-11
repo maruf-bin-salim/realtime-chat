@@ -17,7 +17,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useToast } from "./ui/use-toast";
 
 function ShareLink({
-  chatId,
+  chatId
 }: {
   chatId: string;
 }) {
@@ -51,7 +51,12 @@ function ShareLink({
       <DialogTrigger asChild>
         <Button variant="outline">
           <Copy className="mr-2" />
-          Share Link
+          <p className="hidden md:block">
+            Share Link
+          </p>
+          <p className="md:hidden">
+            Share
+          </p>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg rounded-xl dark:bg-black shadow-lg shadow-black dark:shadow-lg dark:shadow-white/30">

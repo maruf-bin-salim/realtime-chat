@@ -1,30 +1,11 @@
 "use client";
-// import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Skeleton } from "./ui/skeleton";
-// import { chatGroup, limitedSortedgroupsRef } from "@/lib/converters/chatGroup";
 import UserAvatar from "./UserAvatar";
-// import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useLanguageStore } from "@/store/store";
 
 function ChatListRow({ chatId, chatGroup }: { chatId: string, chatGroup: any }) {
-  // const [groups, loading, error] = useCollectionData<chatGroup>(
-  //   limitedSortedgroupsRef(chatId)
-  // );
 
-  // const chatGroup = {
-  //   admin_id: userAccount.user_id,
-  //   last_text: 'New Chat',
-  //   last_text_sent_at: Date.now(),
-  //   last_text_sent_by: userAccount.user_id,
-  //   last_text_sent_by_details: {
-  //     user_id: userAccount.user_id,
-  //     fullname: userAccount.fullname,
-  //     email: userAccount.email,
-  //     avatar: userAccount.avatar,
-  //   },
-  //   users_with_permission: [userAccount.user_id],
-  // }
 
   const groups: any = [
     {
@@ -57,7 +38,7 @@ function ChatListRow({ chatId, chatGroup }: { chatId: string, chatGroup: any }) 
       return words[0] + " " + words[1];
     }
     return name.substring(0, 15);
-    
+
   }
 
 
