@@ -109,17 +109,14 @@ function CreateChatButton({ isLarge }: { isLarge?: boolean }) {
     }
 
 
-    // else chat creation failed
-    else {
-      console.error(error);
-      toast({
-        title: "Error!",
-        description: "There was an error creating your chat!",
-        variant: "destructive",
-      });
-    }
+    toast({
+      title: "Success!",
+      description: "You have successfully created a new chat!",
+      className: "bg-green-600 text-white",
+      duration: 2000,
+    });
 
-
+    setLoading(false);
 
 
     // // Check if user is pro and limit them creating a new chat.

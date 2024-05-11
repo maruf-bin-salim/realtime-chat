@@ -68,10 +68,10 @@ function ChatMessages({
         </div>
       )}
 
-      {messages?.map((message: any) => {
+      {messages?.map((message: any, index) => {
         const isSender = message.user.id === session?.user.id;
         return (
-          <div key={message.id} className="flex my-2 items-end">
+          <div key={index} className="flex my-2 items-end">
             <div
               className={`flex flex-col w-96 relative space-y-2 p-4 overflow-auto whitespace-normal mx-2 rounded-lg ${
                 isSender
