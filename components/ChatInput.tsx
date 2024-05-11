@@ -97,7 +97,7 @@ function ChatInput({ chatId }: { chatId: string }) {
   }
 
   return (
-    <div className="sticky bottom-0">
+    <div className="absolute bottom-0 left-0 w-full bg-black">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

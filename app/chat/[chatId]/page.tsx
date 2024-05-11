@@ -63,7 +63,7 @@ async function ChatPage({ params: { chatId } }: Props) {
 
 
   return (
-    <div className="flex-1 w-full flex flex-col max-w-6xl mx-auto h-screen pb-2">
+    <div className="flex-1 w-full flex flex-col max-w-6xl mx-auto pb-2 h-screen">
 
       {
         !hasAccess && (
@@ -74,20 +74,19 @@ async function ChatPage({ params: { chatId } }: Props) {
       }
       {
         hasAccess && (
-          <>
+          <div className="w-full flex flex-col max-w-6xl mx-auto h-[80vh]">
             <AdminControls chatId={chatId} isAdmin={isCurrentUserAdmin} />
             <ChatMembersBadges memberBadges={memberBadges} />
 
-            <div className="flex-1">
+            <div className="flex-1 pb-2 overflow-y-scroll">
               <ChatMessages
                 chatId={chatId}
                 session={session}
                 initialMessages={initialMessages}
               />
             </div>
-
             <ChatInput chatId={chatId} />
-          </>
+          </div>
         )
       }
 

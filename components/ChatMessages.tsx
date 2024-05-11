@@ -28,7 +28,7 @@ function ChatMessages({
   //   }
   // );
 
-  const messages: any = [
+  const x: any = [
     {
       user: {
         name: "John Doe",
@@ -40,6 +40,7 @@ function ChatMessages({
       timestamp: new Date(),
     },
   ];
+  let messages = new Array(10).fill(x).flat();
   const loading: any = false;
   const error: any = false;
 
@@ -48,7 +49,7 @@ function ChatMessages({
   });
 
   return (
-    <div className="p-5">
+    <div className="p-5 flex-[1]">
       {!loading && messages?.length === 0 && (
         <div
           className="flex flex-col justify-center items-center p-20
