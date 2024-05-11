@@ -27,7 +27,7 @@ function ShareLink({
   const ENV = process.env.NODE_ENV;
   const host = ENV === "development" ? "http://localhost:3000/chat" : "https://chat-up-realtime.vercel.app/chat";
 
-  const linkToChat =`${host}`;
+  const linkToChat =`${host}/${chatId}`;
   const [isOpen, setIsOpen] = useState(false);
 
   async function copyToClipboard() {

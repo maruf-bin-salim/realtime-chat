@@ -60,6 +60,8 @@ async function ChatPage({ params: { chatId } }: Props) {
     }
   }) || [];
 
+  const isCurrentUserAdmin = admin_id === userAccount?.user_id;
+
 
   const initialMessages: any[] = [];
 
@@ -78,7 +80,7 @@ async function ChatPage({ params: { chatId } }: Props) {
       {
         hasAccess && (
           <>
-            <AdminControls chatId={chatId} />
+            <AdminControls chatId={chatId} isAdmin={isCurrentUserAdmin} />
             <ChatMembersBadges chatId={chatId} memberBadges={memberBadges} />
 
             <div className="flex-1">
