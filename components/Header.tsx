@@ -6,7 +6,6 @@ import UserButton from "./UserButton";
 import Link from "next/link";
 import { MessagesSquareIcon } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
-import UpgradeBanner from "./UpgradeBanner";
 import LanguageSelect from "./LanguageSelect";
 import useSession from "@/lib/supabase/use-session";
 import { useEffect, useState } from "react";
@@ -68,8 +67,6 @@ function Header() {
         </div>
       </nav>
 
-      {/* Upgrade Banner */}
-      <UpgradeBanner />
     </header>
   );
 }

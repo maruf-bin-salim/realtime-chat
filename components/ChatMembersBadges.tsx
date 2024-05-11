@@ -1,8 +1,5 @@
 "use client";
 
-// import useAdminId from "@/hooks/useAdminId";
-// import { ChatMembers, chatMembersRef } from "@/lib/converters/ChatMembers";
-// import { useCollectionData } from "react-firebase-hooks/firestore";
 import LoadingSpinner from "./LoadingSpinner";
 import { Badge } from "./ui/badge";
 import UserAvatar from "./UserAvatar";
@@ -11,9 +8,7 @@ function ChatMembersBadges({ memberBadges }: { memberBadges: any[] }) {
 
   const members: any[] = memberBadges;
   const loading = false;
-  const error = false;
 
-  const adminId = null;
 
   if (loading && !members) return <LoadingSpinner />;
 

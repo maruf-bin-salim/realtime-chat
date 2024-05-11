@@ -15,7 +15,6 @@ import { Button } from "./ui/button";
 // import { useSubscriptionStore } from "@/store/store";
 import LoadingSpinner from "./LoadingSpinner";
 import { StarIcon } from "lucide-react";
-import ManageAccountButton from "./ManageAccountButton";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";

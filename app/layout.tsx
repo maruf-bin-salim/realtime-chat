@@ -18,8 +18,6 @@ export default function RootLayout({
     <html lang="en"  suppressHydrationWarning={true}>
 
       <body className="flex flex-col min-h-screen bg-white dark:bg-black">
-        {/* <FirebaseAuthProvider> */}
-        {/* <SubscriptionProvider> */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -31,8 +29,6 @@ export default function RootLayout({
 
           <Toaster />
         </ThemeProvider>
-        {/* </SubscriptionProvider> */}
-        {/* </FirebaseAuthProvider> */}
       </body>
     </html>
 

@@ -1,11 +1,5 @@
 "use client";
 
-// import {
-//   ChatMembers,
-//   chatMembersCollectionGroupRef,
-// } from "@/lib/converters/ChatMembers";
-// import { useSession } from "next-auth/react";
-// import { useCollectionData } from "react-firebase-hooks/firestore";
 import { MessageSquare } from "lucide-react";
 import CreateChatButton from "./CreateChatButton";
 import ChatListRow from "./ChatListRow";
@@ -14,23 +8,14 @@ import useSession from "@/lib/supabase/use-session";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import { Skeleton } from "./ui/skeleton";
 
-// function ChatListRows({ initialChats }: { initialChats: ChatMembers[] }) {
 function ChatListRows({ initialChats }: { initialChats: any[] }) {
-  // const { data: session } = useSession();
 
-  // const [members, loading, error] = useCollectionData<ChatMembers>(
-  //   session && chatMembersCollectionGroupRef(session?.user.id!),
-  //   {
-  //     initialValue: initialChats,
-  //   }
-  // );
 
   const session = useSession();
   const supabase = createSupabaseBrowserClient();
   const [userAccount, setUserAccount] = useState<{
     fullname: string,
     email: string,
-    user_groups: string[],
     user_id: string,
     avatar: string,
   } | null>(null);
@@ -38,7 +23,6 @@ function ChatListRows({ initialChats }: { initialChats: any[] }) {
   const [loading, setLoading] = useState(true);
 
 
-  // subscribe to chat_groups table and users_with_permissions
 
   async function getAllUserChatGroups(user_id: String) {
     const { data, error } = await supabase.from('chat_groups').select('*');
