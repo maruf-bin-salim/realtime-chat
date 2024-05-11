@@ -7,14 +7,14 @@ import LoadingSpinner from "./LoadingSpinner";
 import { Badge } from "./ui/badge";
 import UserAvatar from "./UserAvatar";
 
-function ChatMembersBadges({ chatId }: { chatId: string }) {
+function ChatMembersBadges({ chatId, memberBadges }: { chatId: string, memberBadges: any[] }) {
   // const [members, loading, error] = useCollectionData<ChatMembers>(
   //   chatMembersRef(chatId)
   // );
 
   // const adminId = useAdminId({ chatId });
 
-  const members: any[] = [];
+  const members: any[] = memberBadges;
   const loading = false;
   const error = false;
 
@@ -33,11 +33,11 @@ function ChatMembersBadges({ chatId }: { chatId: string }) {
               className="h-14 p-5 pl-2 pr-5 space-x-2 rounded-xl"
             >
               <div className="flex items-center space-x-2">
-                <UserAvatar name={member.email} image={member.image} />
+                <UserAvatar name={member.email} image={member.avatar} />
               </div>
               <div>
                 <p>{member.email}</p>
-                {member.userId === adminId && (
+                {member.isAdmin && (
                   <p className="text-indigo-400 animate-pulse">Admin</p>
                 )}
               </div>

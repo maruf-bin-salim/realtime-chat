@@ -23,7 +23,9 @@ function ShareLink({
 }) {
   const { toast } = useToast();
 
-  const host = window.location;
+  // node process dev or prod
+  const ENV = process.env.NODE_ENV;
+  const host = ENV === "development" ? "http://localhost:3000/chat" : "https://chat-up-realtime.vercel.app/chat";
 
   const linkToChat =`${host}`;
   const [isOpen, setIsOpen] = useState(false);
