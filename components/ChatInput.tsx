@@ -21,7 +21,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import { useEffect, useRef, useState } from "react";
 import useSession from "@/lib/supabase/use-session";
 import LoadingSpinner from "./LoadingSpinner";
-import { translate } from "google-translate-api-browser";
+import { translate } from "@/lib/google-translate-api-browser/dest/browser/esm";
 
 
 
@@ -191,11 +191,11 @@ function ChatInput({ chatId }: { chatId: string }) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
 
     translate("Je ne mangé pas six jours", { to: "en", corsUrl: "https://corsproxy.io/?" })
-      .then(res => {
+      .then((res : {text: string}) => {
         // I do not eat six days
         console.log(res.text)
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.error(err);
       });
 
