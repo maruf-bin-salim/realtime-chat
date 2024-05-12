@@ -21,7 +21,6 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import { useEffect, useRef, useState } from "react";
 import useSession from "@/lib/supabase/use-session";
 import LoadingSpinner from "./LoadingSpinner";
-import { translate } from "@/lib/google-translate-api-browser/dest/browser/esm";
 
 
 
@@ -225,17 +224,21 @@ function ChatInput({ chatId }: { chatId: string }) {
     const { data, error } = await supabase.from('chat_groups').update({ last_text, last_text_sent_by, last_text_sent_by_details, last_text_sent_at }).eq('id', chatId);
 
 
+    // post message to /api/translate fetch
+    const response = await fetch("/api/translate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        q: values.input,
+        tl: 'es'
+      }),
+    });
 
+    const json = await response.json();
+    console.log(json);
 
-
-    translate(values.input, { to: "es", corsUrl: "https://cors-anywhere.herokuapp.com/" })
-      .then((res: { text: string }) => {
-        // I do not eat six days
-        console.log(res.text)
-      })
-      .catch((err: any) => {
-        console.error(err);
-      });
 
     // Send message to chat table
     const message = {
