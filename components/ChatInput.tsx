@@ -14,12 +14,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
 
 import { useRouter } from "next/navigation";
-import { Subscript } from "lucide-react";
+import { ArrowDownNarrowWide, ArrowUp, ImageIcon, Subscript, UploadIcon, XIcon } from "lucide-react";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSession from "@/lib/supabase/use-session";
+import LoadingSpinner from "./LoadingSpinner";
 
 const formSchema = z.object({
   input: z.string().max(1000),
@@ -39,6 +40,64 @@ function ChatInput({ chatId }: { chatId: string }) {
 
   const session = useSession();
   const router = useRouter();
+
+  const ref = useRef();
+
+  const resetFileInput = () => {
+    if (!ref.current) {
+      return;
+    }
+    ref.current.value = "";
+  }
+
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [fileUpload, setFileUpload] = useState(false);
+
+  const handleImageChange = (event: any) => {
+
+
+    if (event.target.files && event.target.files[0]) {
+
+      setImage(event.target.files[0]);
+    }
+  };
+
+  const handleUpload = async () => {
+
+    if (!image) {
+      return;
+    }
+
+    setUploading(true);
+    // ... file selection and validation ...
+    const file = image;
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    resetFileInput();
+
+    const { error: uploadError } = await supabase.storage.from('attachments').upload(filePath, file);
+    if (uploadError) {
+      throw uploadError;
+    }
+    await onUpload(filePath);
+    setUploading(false);
+  };
+
+  async function onUpload(filePath: string) {
+    const { data, error } = await supabase.storage
+      .from('attachments').getPublicUrl(filePath);
+
+    if (data) {
+      console.log(data.publicUrl);
+    }
+
+    setFileUpload(false);
+    resetFileInput();
+  };
+
 
 
   async function fetchUserAccount(session: any) {
@@ -117,11 +176,47 @@ function ChatInput({ chatId }: { chatId: string }) {
 
   return (
     <div className="fixed bottom-[10px] left-0 w-full bg-black">
+      {/* 
+      <div>
+        <input type='file' />
+        <button onClick={handleUpload} disabled={uploading}>
+          {uploading ? 'Uploading...' : 'Upload Image'}
+        </button>
+      </div> */}
+
       <Form {...form}>
+        <div className="flex items-center justify-between p-2 bg-white bg-white dark:bg-black gap-2">
+
+          {
+
+            fileUpload && !uploading &&
+            <div className="flex items-center gap-2 max-w-xl mx-auto">
+
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input"></label>
+              <input ref={ref} onChange={handleImageChange} className="block w-full text-sm text-gray-900 rounded-lg cursor-pointer bg-gray-100 p-2 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
+              <button onClick={() => { resetFileInput(); setImage(null); setFileUpload(false) }}>
+                <XIcon size={24} className="text-black dark:text-white" />
+              </button>
+              <button onClick={handleUpload} disabled={uploading} className="text-white">
+                <UploadIcon size={24} className="text-black dark:text-white" />
+              </button>
+            </div>
+          }
+
+          {
+            fileUpload && uploading &&
+            <div className="flex items-center gap-2 max-w-xl mx-auto">
+              <LoadingSpinner />
+            </div>
+          }
+
+
+        </div>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex space-x-2 p-2 rounded-t-xl max-w-xl mx-auto bg-white border dark:bg-black"
+          className="flex space-x-2 p-2 rounded-t-xl max-w-xl mx-auto bg-white border dark:bg-black items-center"
         >
+
           <FormField
             control={form.control}
             name="input"
@@ -138,7 +233,18 @@ function ChatInput({ chatId }: { chatId: string }) {
               </FormItem>
             )}
           />
-          <Button type="submit" className="bg-violet-600 text-white">
+          <div
+            className=" dark:bg-black text-black dark:text-white h-full flex items-center justify-center rounded-lg cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              form.reset();
+            }}>
+            {
+              !fileUpload ? <ImageIcon size={40} className="text-black dark:text-white" onClick={() => setFileUpload(true)} />
+                : (null)
+            }
+          </div>
+          <Button type="submit" className="bg-violet-600 text-white" disabled={fileUpload}>
             Send
           </Button>
         </form>
