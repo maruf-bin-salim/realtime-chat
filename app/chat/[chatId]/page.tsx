@@ -74,6 +74,7 @@ async function ChatPage({ params: { chatId } }: Props) {
               <ChatMessages
                 chatId={chatId}
                 session={session}
+                userAccount={userAccount}
                 initialMessages={initialMessages}
               />
             </div>
