@@ -92,6 +92,7 @@ function ChatInput({ chatId }: { chatId: string }) {
 
     if (data) {
       console.log(data.publicUrl);
+      sendAttachmentChat(data.publicUrl);
     }
 
     setFileUpload(false);
@@ -124,6 +125,58 @@ function ChatInput({ chatId }: { chatId: string }) {
     },
   });
 
+  async function sendAttachmentChat(url: string | null) {
+
+    if (!url) {
+      return;
+    }
+
+    if (!userAccount) {
+      toast({
+        title: "Error",
+        description: "User account not found",
+        className: "bg-red-300 text-white",
+      });
+      router.push("/");
+      return;
+    }
+
+    const { data: chatGroup, error: chatGroupError } = await supabase.from('chat_groups').select('*').eq('id', chatId).single();
+
+    if (chatGroupError || !chatGroup) {
+      toast({
+        title: "Error",
+        description: "Chat group not found",
+        className: "bg-red-300 text-white",
+      });
+      router.push("/chat");
+    }
+
+    let last_text = "A file attachment has been sent";
+    let last_text_sent_by = userAccount.user_id;
+    let last_text_sent_by_details = userAccount;
+    let last_text_sent_at = Date.now();
+
+    const { data, error } = await supabase.from('chat_groups').update({ last_text, last_text_sent_by, last_text_sent_by_details, last_text_sent_at }).eq('id', chatId);
+
+
+    const message = {
+      group_id: chatId,
+      type: "attachment",
+      sent_by: userAccount.user_id,
+      sent_by_details: userAccount,
+      text: 'An attachment has been sent',
+      attachment: url 
+    };
+
+
+    const { data: chatMessage, error: chatMessageError } = await supabase.from('chat').insert(message);
+
+
+
+
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
 
     if (!userAccount) {
@@ -135,6 +188,8 @@ function ChatInput({ chatId }: { chatId: string }) {
       router.push("/");
       return;
     }
+
+
 
     // try to find the chat group from chat_groups table
     const { data: chatGroup, error: chatGroupError } = await supabase.from('chat_groups').select('*').eq('id', chatId).single();

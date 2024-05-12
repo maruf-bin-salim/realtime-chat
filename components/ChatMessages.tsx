@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguageStore } from "@/store/store";
-import { MessageCircleIcon } from "lucide-react";
+import { DownloadIcon, MessageCircleIcon } from "lucide-react";
 import { createRef, use, useEffect, useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import UserAvatar from "./UserAvatar";
@@ -102,7 +102,7 @@ function ChatMessages({
       .channel('chat_channel')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat' }, payload => {
         console.log('chat message change', payload);
-        if(payload.new.group_id === chatId) {
+        if (payload.new.group_id === chatId) {
           setMessages([...messages, payload.new]);
         }
       })
@@ -159,12 +159,30 @@ function ChatMessages({
                 className={`text-xs italic font-light line-clamp-1${isSender ? "text-right" : "text-left"
                   }`}
               >
-                {message?.sent_by_details?.fullname.split(" ")[0] || message?.sent_by_details?.email || "User"}{" "} 
+                {message?.sent_by_details?.fullname.split(" ")[0] || message?.sent_by_details?.email || "User"}{" "}
               </p>
               <div className="space-x-2">
                 <p className="whitespace-normal break-words">{message.text}</p>
                 {/* {!message.translated && <LoadingSpinner />} */}
               </div>
+              {
+                message.attachment && (
+                  <div className="flex items-center space-x-2">
+                    {
+                      (message.attachment.includes('.png') || message.attachment.includes('.jpg') || message.attachment.includes('.jpeg') || message.attachment.includes('.gif')) &&
+                      <img src={message.attachment} alt="attachment" className="w-20 h-20 object-cover rounded-lg" />
+                    }
+                    <p>
+                      {`file.` + message.attachment.split('/').pop().split('.')[2]}
+                    </p>
+                    <button onClick={() => window.open(message.attachment, '_blank')} className="flex items-center gap-2 p-2 bg-gray-200 rounded-lg">
+                      <DownloadIcon size={20} className="text-gray-400" />
+                    </button>
+
+                  </div>
+                )
+              }
+              <p className="text-sm text-gray-800">{new Date(message.created_at).toLocaleString()}</p>
             </div>
             <UserAvatar
               name={message?.sent_by_details?.fullname || message?.sent_by_details?.email || "User"}

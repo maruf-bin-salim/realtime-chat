@@ -53,6 +53,9 @@ function DeleteChatButton({ chatId }: { chatId: string }) {
     // delete chat from chat_groups
     const { data, error } = await supabase.from('chat_groups').delete().eq('id', chatId);
 
+    // delete all chat from chats where chat.group_id = chatId
+    const { data: chatData, error: chatError } = await supabase.from('chat').delete().eq('group_id', chatId);
+
     if (error) {
       toast({
         title: "Error!",
