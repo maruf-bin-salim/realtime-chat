@@ -190,14 +190,7 @@ function ChatInput({ chatId }: { chatId: string }) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
 
-    translate("Je ne mangé pas six jours", { to: "en", corsUrl: "https://corsproxy.io/?" })
-      .then((res : {text: string}) => {
-        // I do not eat six days
-        console.log(res.text)
-      })
-      .catch((err: any) => {
-        console.error(err);
-      });
+
 
     if (!userAccount) {
       toast({
@@ -232,6 +225,17 @@ function ChatInput({ chatId }: { chatId: string }) {
     const { data, error } = await supabase.from('chat_groups').update({ last_text, last_text_sent_by, last_text_sent_by_details, last_text_sent_at }).eq('id', chatId);
 
 
+
+
+
+    translate(values.input, { to: "es", corsUrl: "http://cors-anywhere.herokuapp.com/" })
+      .then((res: { text: string }) => {
+        // I do not eat six days
+        console.log(res.text)
+      })
+      .catch((err: any) => {
+        console.error(err);
+      });
 
     // Send message to chat table
     const message = {
