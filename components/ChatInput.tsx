@@ -228,7 +228,7 @@ function ChatInput({ chatId }: { chatId: string }) {
 
 
 
-    translate(values.input, { to: "es", corsUrl: "http://cors-anywhere.herokuapp.com/" })
+    translate(values.input, { to: "es", corsUrl: "https://cors-anywhere.herokuapp.com/" })
       .then((res: { text: string }) => {
         // I do not eat six days
         console.log(res.text)
