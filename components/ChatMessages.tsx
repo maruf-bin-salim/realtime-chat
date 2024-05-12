@@ -103,7 +103,6 @@ function ChatMessages({
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat' }, payload => {
         console.log('chat message change', payload);
         if(payload.new.group_id === chatId) {
-          console.log(messages, payload.new);
           setMessages([...messages, payload.new]);
         }
       })
@@ -112,7 +111,6 @@ function ChatMessages({
     const groupSubscription = supabase
       .channel('chat_groups_subscription')
       .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'chat_groups' }, payload => {
-        console.log('Delete Group', payload);
         checkIfGroupExists();
       })
       .subscribe()
