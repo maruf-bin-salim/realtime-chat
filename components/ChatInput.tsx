@@ -41,40 +41,48 @@ function ChatInput({ chatId }: { chatId: string }) {
   const session = useSession();
   const router = useRouter();
 
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>(null);
 
   const resetFileInput = () => {
     if (!ref.current) {
       return;
     }
-    ref.current.value = "";
+
+    const inputElement = ref.current as HTMLInputElement | null;
+    if (inputElement) {
+      inputElement.value = "";
+    }
   }
 
-  const [image, setImage] = useState(null);
+
+  const [image, setImage] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileUpload, setFileUpload] = useState(false);
 
-  const handleImageChange = (event: any) => {
-
-
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-
       setImage(event.target.files[0]);
     }
   };
 
   const handleUpload = async () => {
-
     if (!image) {
       return;
     }
 
     setUploading(true);
+
     // ... file selection and validation ...
-    const file = image;
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `${fileName}`;
+
+    const file: File = image;
+    const fileExt: string | undefined = file.name.split('.').pop();
+    if (!fileExt) {
+      // Handle error: unable to get file extension
+      return;
+    }
+
+    const fileName: string = `${Math.random()}.${fileExt}`;
+    const filePath: string = `${fileName}`;
 
     resetFileInput();
 
@@ -87,7 +95,7 @@ function ChatInput({ chatId }: { chatId: string }) {
   };
 
   async function onUpload(filePath: string) {
-    const { data, error } = await supabase.storage
+    const { data } = await supabase.storage
       .from('attachments').getPublicUrl(filePath);
 
     if (data) {
@@ -166,7 +174,7 @@ function ChatInput({ chatId }: { chatId: string }) {
       sent_by: userAccount.user_id,
       sent_by_details: userAccount,
       text: 'An attachment has been sent',
-      attachment: url 
+      attachment: url
     };
 
 
