@@ -148,41 +148,50 @@ function ChatMessages({
       {messages?.map((message: any, index) => {
         const isSender = message.sent_by === userAccount?.user_id;
         return (
-          <div key={index} className="flex my-2 items-end">
+          <div key={index} className="flex my-2 md:my-4 items-end">
             <div
               className={`flex flex-col w-96 relative space-y-2 p-4 overflow-auto whitespace-normal mx-2 rounded-lg ${isSender
-                ? "ml-auto bg-green-600 text-white rounded-br-none"
+                ? "ml-auto bg-gray-800 text-white rounded-br-none"
                 : "bg-gray-300 dark:bg-slate-700 dark:text-gray-100 rounded-bl-none"
                 }`}
             >
               <p
-                className={`text-xs italic font-light line-clamp-1${isSender ? "text-right" : "text-left"
+                className={`text-white text-lg font-bold ${isSender ? "text-right" : "text-left text-gray-800 dark:text-gray-100"
                   }`}
               >
                 {message?.sent_by_details?.fullname.split(" ")[0] || message?.sent_by_details?.email || "User"}{" "}
               </p>
-              <div className="space-x-2">
-                <p className="whitespace-normal break-words">{message.text}</p>
-                {/* {!message.translated && <LoadingSpinner />} */}
+
+              <div className={isSender ? "flex flex-col gap-2 p-2 rounded-md bg-gray-600" : "flex flex-col gap-2 bg-gray-800 p-2 rounded-md"}>
+                <p className={message.attachment ? "font-bold whitespace-normal break-words" : "font-bold whitespace-normal break-words"}>
+                  {message.text}
+                </p>
+                <p className={isSender ? "text-gray-400 text-sm" : "text-black dark:text-white text-sm"}>
+                  {new Date(message.created_at).toLocaleString()}</p>
               </div>
+
               {
                 message.attachment && (
-                  <div className="flex items-center space-x-2">
-                    {
-                      (message.attachment.includes('.png') || message.attachment.includes('.jpg') || message.attachment.includes('.jpeg') || message.attachment.includes('.gif')) &&
-                      <img src={message.attachment} alt="attachment" className="w-20 h-20 object-cover rounded-lg" />
-                    }
-                    <p>
-                      {`file.` + message.attachment.split('/').pop().split('.')[2]}
-                    </p>
-                    <button onClick={() => window.open(message.attachment, '_blank')} className="flex items-center gap-2 p-2 bg-gray-200 rounded-lg">
-                      <DownloadIcon size={20} className="text-gray-400" />
+                  <div className={isSender ? "flex items-center justify-between p-2 rounded-md text-black bg-gray-600" : "flex items-center justify-between p-2 rounded-md bg-gray-800"}>
+                    <div>
+                      {
+                        (message.attachment.includes('.png') || message.attachment.includes('.jpg') || message.attachment.includes('.jpeg') || message.attachment.includes('.gif')) &&
+                        <img src={message.attachment} alt="attachment" className="w-20 h-20 object-cover rounded-lg mb-2" />
+                      }
+                      <p className={isSender ? "text-[#cbcbcb] underline" : "text-gray-400 underline"}>
+                        {`file.` + message.attachment.split('/').pop().split('.')[2]}
+                      </p>
+                    </div>
+                    <button onClick={() => window.open(message.attachment, '_blank')}
+                      className={isSender ? "mt-auto flex items-center gap-2 p-2 bg-transparent text-white rounded-lg" : "mt-auto flex items-center gap-2 p-2 bg-transparent text-white"}>
+                      <DownloadIcon size={24} className="" />
                     </button>
 
                   </div>
                 )
               }
-              <p className="text-sm text-gray-800">{new Date(message.created_at).toLocaleString()}</p>
+
+
             </div>
             <UserAvatar
               name={message?.sent_by_details?.fullname || message?.sent_by_details?.email || "User"}

@@ -95,7 +95,7 @@ function ChatInput({ chatId }: { chatId: string }) {
   };
 
   async function onUpload(filePath: string) {
-    const { data } = await supabase.storage
+    const { data } = supabase.storage
       .from('attachments').getPublicUrl(filePath);
 
     if (data) {
