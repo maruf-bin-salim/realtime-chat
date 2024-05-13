@@ -11,7 +11,8 @@ export type LanguagesSupported =
   | "ja"
   | "la"
   | "ru"
-  | "zh";
+  | "zh"
+  | "vi";
 
 export const LanguagesSupportedMap: Record<LanguagesSupported, string> = {
   en: "English",
@@ -25,6 +26,7 @@ export const LanguagesSupportedMap: Record<LanguagesSupported, string> = {
   la: "Latin",
   ru: "Russian",
   zh: "Manadarin",
+  vi: "Vietnamese"
 };
 
 const LANGUAGES_IN_FREE = 2;

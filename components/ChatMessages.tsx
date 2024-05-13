@@ -29,25 +29,31 @@ function ChatMessages({
   const { toast } = useToast();
   const supabase = createSupabaseBrowserClient();
 
-  const x: any = [
-    {
-      user: {
-        name: "John Doe",
-        image: "/avatar.png",
-      },
-      translated: {
-        en: "Hello, how are you?",
-      },
-      timestamp: new Date(),
-    },
-  ];
   const loading: any = false;
   const error: any = false;
   const [messages, setMessages] = useState<any[]>([]);
 
-  // useEffect(() => {
-  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  // });
+  const store = useLanguageStore();
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  });
+
+  function getText(chat: any){
+
+
+    let translations = chat?.translations;
+    let currentLanguage = store.language;
+
+    for (let i = 0; i < translations.length; i++) {
+      if (translations[i].language === currentLanguage) {
+        return translations[i].text;
+      }
+    }
+
+    return chat.text;
+
+  }
 
   async function checkIfGroupExists() {
     const { data, error } = await supabase
@@ -164,7 +170,7 @@ function ChatMessages({
 
               <div className={isSender ? "flex flex-col gap-2 p-2 rounded-md bg-gray-600" : "flex flex-col gap-2 bg-gray-800 p-2 rounded-md"}>
                 <p className={message.attachment ? "font-bold whitespace-normal break-words" : "font-bold whitespace-normal break-words"}>
-                  {message.text}
+                  {getText(message)}
                 </p>
                 <p className={isSender ? "text-gray-400 text-sm" : "text-black dark:text-white text-sm"}>
                   {new Date(message.created_at).toLocaleString()}</p>

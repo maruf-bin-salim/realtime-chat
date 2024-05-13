@@ -21,7 +21,33 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import { useEffect, useRef, useState } from "react";
 import useSession from "@/lib/supabase/use-session";
 import LoadingSpinner from "./LoadingSpinner";
+import { useLanguageStore } from "@/store/store";
 
+
+
+function getGoogleLanguageCode(languageName: string): string {
+
+
+  const languageMap = {
+    "en": "en",
+    "pl": "pl",
+    "de": "de",
+    "fr": "fr",
+    "es": "es",
+    "tr": "tr",
+    "hi": "hi",
+    "ja": "ja",
+    "la": "la",
+    "ru": "ru",
+    "zh": "zh-CN",
+    "vi": "vi"
+  } as const;
+
+
+  const lowercaseLanguageName = languageName.toLowerCase() as keyof typeof languageMap;
+
+  return languageMap[lowercaseLanguageName];
+}
 
 
 const formSchema = z.object({
@@ -42,6 +68,7 @@ function ChatInput({ chatId }: { chatId: string }) {
 
   const session = useSession();
   const router = useRouter();
+  const store = useLanguageStore();
 
   const ref = useRef<HTMLInputElement>(null);
 
@@ -60,6 +87,7 @@ function ChatInput({ chatId }: { chatId: string }) {
   const [image, setImage] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [fileUpload, setFileUpload] = useState(false);
+  const [sending, setSending] = useState(false);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -190,6 +218,10 @@ function ChatInput({ chatId }: { chatId: string }) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
 
 
+    let text = values.input;
+    form.reset();
+
+
 
     if (!userAccount) {
       toast({
@@ -200,7 +232,6 @@ function ChatInput({ chatId }: { chatId: string }) {
       router.push("/");
       return;
     }
-
 
 
     // try to find the chat group from chat_groups table
@@ -216,28 +247,45 @@ function ChatInput({ chatId }: { chatId: string }) {
     }
 
     // update last_text, last_text_sent_by, last_text_sent_by_details, last_text_sent_at in chat_groups table
-    let last_text = values.input;
+    let last_text = text;
     let last_text_sent_by = userAccount.user_id;
     let last_text_sent_by_details = userAccount;
     let last_text_sent_at = Date.now();
 
+    setSending(true);
+
     const { data, error } = await supabase.from('chat_groups').update({ last_text, last_text_sent_by, last_text_sent_by_details, last_text_sent_at }).eq('id', chatId);
 
 
-    // post message to /api/translate fetch
-    const response = await fetch("/api/translate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        q: values.input,
-        tl: 'es'
-      }),
-    });
 
-    const json = await response.json();
-    console.log(json);
+    // https://github.com/ssut/py-googletrans/issues/268
+    let translationPromises = Promise.all(store.getLanguages().map(async (language) => {
+      const tl = getGoogleLanguageCode(language);
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          q: text,
+          tl: tl
+        }),
+      });
+
+      const json = await response.json();
+
+      let data = {
+        language: language,
+        text: json?.text?.[0]?.[0] || text
+      };
+      return data; // Return the result of each translation
+    }));
+
+    const translations = await translationPromises; // Wait for all translations to be done
+    console.log(translations); // Log the translations
+
+
+
 
 
     // Send message to chat table
@@ -246,25 +294,20 @@ function ChatInput({ chatId }: { chatId: string }) {
       type: "text",
       sent_by: userAccount.user_id,
       sent_by_details: userAccount,
-      text: values.input,
-      attachment: null
+      text: text,
+      attachment: null,
+      translations: translations
     };
 
     const { data: chatMessage, error: chatMessageError } = await supabase.from('chat').insert(message);
 
-    form.reset();
+    setSending(false);
 
   }
 
   return (
     <div className="fixed bottom-[10px] left-0 w-full bg-black">
-      {/* 
-      <div>
-        <input type='file' />
-        <button onClick={handleUpload} disabled={uploading}>
-          {uploading ? 'Uploading...' : 'Upload Image'}
-        </button>
-      </div> */}
+
 
       <Form {...form}>
         <div className="flex items-center justify-between p-2 bg-white bg-white dark:bg-black gap-2">
@@ -294,6 +337,7 @@ function ChatInput({ chatId }: { chatId: string }) {
 
 
         </div>
+
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex space-x-2 p-2 rounded-t-xl max-w-xl mx-auto bg-white border dark:bg-black items-center"
@@ -326,10 +370,14 @@ function ChatInput({ chatId }: { chatId: string }) {
                 : (null)
             }
           </div>
-          <Button type="submit" className="bg-violet-600 text-white" disabled={fileUpload}>
-            Send
+
+          <Button type="submit" className="bg-violet-600 text-white" disabled={fileUpload || sending}>
+            {
+              sending ? <LoadingSpinner /> : "Send"
+            }
           </Button>
         </form>
+
       </Form>
     </div>
   );
